@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:to_do_app_bloc/UI/HomeScreen.dart';
+import 'package:to_do_app_bloc/todo_bloc/to_do_bloc.dart';
 
-void main(){
+void main() {
   runApp(ToDoApp());
 }
 
@@ -9,6 +12,10 @@ class ToDoApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return HomeScreen();
+    return BlocProvider(
+        create: (context) => ToDoBloc(),
+        child: MaterialApp(
+          home: HomeScreen(),
+        ));
   }
 }
