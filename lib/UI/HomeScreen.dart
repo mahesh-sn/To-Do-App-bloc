@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:to_do_app_bloc/UI/AddNewTask.dart';
-import 'package:to_do_app_bloc/todo_bloc/to_do_bloc.dart';
+import 'package:to_do_app_bloc/bloc/to_do_bloc.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -13,6 +13,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+    print("App Started");
     final toDoBloc = context.read<ToDoBloc>();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -32,13 +33,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
               if (task != null && task is String && task.isNotEmpty) {
                 print("Task Came to UI- $task");
-                // toDoBloc.add(AddTaskEvent()); // Pass the task correctly
+                toDoBloc.add(AddNewTaskEvent(task: task));
               }
             },
           ),
           body: BlocBuilder<ToDoBloc, ToDoState>(
             builder: (context, state) {
-              final tasks = (state as ToDoValueState).tasks;
+              final tasks = state.tasks;
+              // print("All tasks which came to UI - $tasks");
               return ListView.builder(
                 itemCount: tasks.length,
                 itemBuilder: (context, index) {

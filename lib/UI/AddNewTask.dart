@@ -29,6 +29,7 @@ class AddNewTask extends StatelessWidget {
               height: 15.0,
             ),
             MaterialButton(
+              color: Colors.green,
               child: const Text("Add"),
               onPressed: () {
                 Navigator.pop(context, task);
