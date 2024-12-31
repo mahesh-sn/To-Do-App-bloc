@@ -8,4 +8,12 @@ class AddNewTaskEvent extends ToDoEvent {
   AddNewTaskEvent({required this.task});
 }
 
-class UpdateTaskEvent extends ToDoEvent {}
+class UpdateTaskStatusEvent extends ToDoEvent {
+  int taskId;
+  int taskStatus;
+  UpdateTaskStatusEvent({required this.taskId, required this.taskStatus});
+}
+
+class InitileTaskEvent extends ToDoEvent {
+  InitileTaskEvent();
+}

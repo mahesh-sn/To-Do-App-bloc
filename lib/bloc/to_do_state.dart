@@ -6,9 +6,16 @@ sealed class ToDoState {
 }
 
 class ToDoInitial extends ToDoState {
+
   ToDoInitial() : super(tasks: []);
 }
 
 class AddNewTaskState extends ToDoState {
   AddNewTaskState(List<Task> tasks) : super(tasks: tasks);
+}
+class UpdateTaskState extends ToDoState {
+  UpdateTaskState() : super(tasks: tasks);
+}
+class InitialTaskState extends ToDoState {
+  InitialTaskState(List<Task> tasks) : super(tasks: tasks);
 }

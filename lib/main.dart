@@ -15,7 +15,8 @@ class ToDoApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
         create: (context) => ToDoBloc(),
-        child: MaterialApp(
+        child: const MaterialApp(
+          debugShowCheckedModeBanner: false,
           home: HomeScreen(),
         ));
   }
