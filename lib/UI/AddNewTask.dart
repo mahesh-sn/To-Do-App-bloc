@@ -6,6 +6,7 @@ class AddNewTask extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("New Screen Add New Task");
     return  Scaffold(
       appBar: AppBar(backgroundColor: Colors.cyanAccent,),
         backgroundColor: Colors.grey,
@@ -32,6 +33,7 @@ class AddNewTask extends StatelessWidget {
               color: Colors.green,
               child: const Text("Add"),
               onPressed: () {
+                print("Entered Task is- $task");
                 Navigator.pop(context, task);
               },
             )

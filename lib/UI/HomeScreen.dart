@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:to_do_app_bloc/Model/TaskModel.dart';
 import 'package:to_do_app_bloc/UI/AddNewTask.dart';
 import 'package:to_do_app_bloc/bloc/to_do_bloc.dart';
 
@@ -11,6 +12,11 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    context.read<ToDoBloc>().add(InitileTaskEvent());
+  }
+
   @override
   Widget build(BuildContext context) {
     print("App Started");
@@ -27,10 +33,9 @@ class _HomeScreenState extends State<HomeScreen> {
               var task = await Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: ( context ) => AddNewTask(),
+                  builder: (context) => AddNewTask(),
                 ),
               );
-
               if (task != null && task is String && task.isNotEmpty) {
                 print("Task Came to UI- $task");
                 toDoBloc.add(AddNewTaskEvent(task: task));
@@ -40,15 +45,19 @@ class _HomeScreenState extends State<HomeScreen> {
           body: BlocBuilder<ToDoBloc, ToDoState>(
             builder: (context, state) {
               final tasks = state.tasks;
-              // print("All tasks which came to UI - $tasks");
+              print("All tasks which came to UI \n- $tasks");
               return ListView.builder(
                 itemCount: tasks.length,
                 itemBuilder: (context, index) {
+                  Task currentTask = tasks[index];
                   return ListTile(
-                    title: Text(tasks[index].taskContent),
+                    title: Text(currentTask.taskContent),
                     trailing: Checkbox(
-                      value: tasks[index].taskStatus == 1,
-                      onChanged: (value) {},
+                      value: currentTask.taskStatus == 1,
+                      onChanged: (value) {
+                        context.read<ToDoBloc>().add(
+                            UpdateTaskStatusEvent(taskId: currentTask.taskId));
+                      },
                     ),
                   );
                 },
