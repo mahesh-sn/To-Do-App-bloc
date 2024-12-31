@@ -5,4 +5,8 @@ class Task {
   Task(
       {required this.taskContent,
       required this.taskStatus});
+  @override
+  String toString() {
+    return "Task content- $taskContent    Task-status- $taskStatus";
+  }
 }
