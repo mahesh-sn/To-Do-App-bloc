@@ -17,3 +17,7 @@ class UpdateTaskStatusEvent extends ToDoEvent {
 class InitileTaskEvent extends ToDoEvent {
   InitileTaskEvent();
 }
+class SelectToDeleteEvent extends ToDoEvent {
+  List<int> taskIds;
+  SelectToDeleteEvent({required this.taskIds});
+}
