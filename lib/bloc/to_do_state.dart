@@ -14,8 +14,10 @@ class AddNewTaskState extends ToDoState {
   AddNewTaskState(List<Task> tasks) : super(tasks: tasks);
 }
 class UpdateTaskState extends ToDoState {
-  UpdateTaskState() : super(tasks: tasks);
+  UpdateTaskState(List<Task> tasks) : super(tasks: tasks);
 }
+
 class InitialTaskState extends ToDoState {
   InitialTaskState(List<Task> tasks) : super(tasks: tasks);
 }
+
