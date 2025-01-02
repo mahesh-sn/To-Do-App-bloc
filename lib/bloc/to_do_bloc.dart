@@ -25,13 +25,15 @@ class ToDoBloc extends Bloc<ToDoEvent, ToDoState> {
       emit(AddNewTaskState(tasks));
     });
 
-    on<UpdateTaskStatusEvent>((event, emit) {
+    on<UpdateTaskStatusEvent>((event, emit) async{
+      print("Called UpdateTaskStatusEvent");
       int taskId = event.taskId;
       int taskStatus = event.taskStatus;
-      databaseService.getTaskById(taskId, taskStatus);
-      List<Task> tasks = state.tasks;
+      databaseService.updateTaskStatus(taskId, taskStatus);
 
-      emit(InitialTaskState(tasks));
+      List<Task> tasks =await databaseService.getAllTasks();
+      print("Tasks got from database after updating the status is: \n $tasks");
+      emit(UpdateTaskState(tasks));
     });
 
     on<InitileTaskEvent>(

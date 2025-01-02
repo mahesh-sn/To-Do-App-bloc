@@ -50,14 +50,19 @@ class _HomeScreenState extends State<HomeScreen> {
                 itemCount: tasks.length,
                 itemBuilder: (context, index) {
                   Task currentTask = tasks[index];
-                  return ListTile(
-                    title: Text(currentTask.taskContent),
-                    trailing: Checkbox(
-                      value: currentTask.taskStatus == 1,
-                      onChanged: (value) {
-                        context.read<ToDoBloc>().add(
-                            UpdateTaskStatusEvent(taskId: currentTask.taskId));
-                      },
+                  return Container(
+                    color: currentTask.taskStatus==0 ? Colors.grey : Colors.green,
+                    child: ListTile(
+                      title: Text(currentTask.taskContent),
+                      trailing: Checkbox(
+                        value: currentTask.taskStatus == 1,
+                        onChanged: (value) {
+                          print("Value-$value");
+                          context.read<ToDoBloc>().add(UpdateTaskStatusEvent(
+                              taskId: currentTask.taskId,
+                              taskStatus: currentTask.taskStatus == 1 ? 0 : 1));
+                        },
+                      ),
                     ),
                   );
                 },

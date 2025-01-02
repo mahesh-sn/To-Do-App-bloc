@@ -79,14 +79,29 @@ class DatabaseService {
     }
   }
 
-  Future<Task> getTaskById(int taskId, int taskStatus) async {
+  Future<void> updateTaskStatus(int taskId, int taskStatus) async {
     try {
       Database? db = await database;
-      int id= await db?.update(_tasksTable, {_taskStatus: taskStatus},
-          where: "$_taskId= ? ", whereArgs: [taskId]) ?? 0;
-      print("Id returned from update()- $id");
+      await db?.update(_tasksTable, {_taskStatus: taskStatus},
+          where: "$_taskId= ? ", whereArgs: [taskId]);
+      print("Updated Status of the task with ID- $taskId");
     } catch (e) {
       print("Error while Getting the Task With Id-$taskId Error-$e");
+    }
+  }
+
+  Future<void> deleteAllTaskById(List<int> taskIds) async {
+    for (int i = 0; i < taskIds.length; i++) {
+      try {
+        int currentTaskId = taskIds[i];
+        Database? db = await database;
+        db?.delete(_tasksTable,
+            where: "$_taskId = ? ", whereArgs: [currentTaskId]);
+        print("Deleted task with Id- ${currentTaskId}");
+      } catch (e) {
+        print("Exception occured while deleting task with ID- ${taskIds[i]}");
+        print("Exception is- $e");
+      }
     }
   }
 }
