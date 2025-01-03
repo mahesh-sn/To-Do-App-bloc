@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:to_do_app_bloc/Model/TaskModel.dart';
-import 'package:to_do_app_bloc/database_service/DatabaseService.dart';
+import 'package:to_do_app_bloc/Model/task_model.dart';
+import 'package:to_do_app_bloc/database_service/database_service.dart';
 
 part 'to_do_event.dart';
 part 'to_do_state.dart';
