@@ -2,7 +2,7 @@ import 'dart:ffi';
 
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:to_do_app_bloc/Model/TaskModel.dart';
+import 'package:to_do_app_bloc/Model/task_model.dart';
 
 class DatabaseService {
   static Database? _db;

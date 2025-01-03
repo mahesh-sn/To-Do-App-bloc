@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:to_do_app_bloc/Model/TaskModel.dart';
-import 'package:to_do_app_bloc/database_service/DatabaseService.dart';
+import 'package:to_do_app_bloc/Model/task_model.dart';
+import 'package:to_do_app_bloc/database_service/database_service.dart';
 
 part 'to_do_event.dart';
 part 'to_do_state.dart';
@@ -25,13 +25,13 @@ class ToDoBloc extends Bloc<ToDoEvent, ToDoState> {
       emit(AddNewTaskState(tasks));
     });
 
-    on<UpdateTaskStatusEvent>((event, emit) async{
+    on<UpdateTaskStatusEvent>((event, emit) async {
       print("Called UpdateTaskStatusEvent");
       int taskId = event.taskId;
       int taskStatus = event.taskStatus;
       databaseService.updateTaskStatus(taskId, taskStatus);
 
-      List<Task> tasks =await databaseService.getAllTasks();
+      List<Task> tasks = await databaseService.getAllTasks();
       print("Tasks got from database after updating the status is: \n $tasks");
       emit(UpdateTaskState(tasks));
     });
@@ -41,6 +41,18 @@ class ToDoBloc extends Bloc<ToDoEvent, ToDoState> {
         List<Task> tasks = await databaseService.getAllTasks();
         print("Got tasks from DB as Initial Task Event- $tasks");
         emit(InitialTaskState(tasks));
+      },
+    );
+    on<SelectToDeleteEvent>(
+      (event, emit) async {
+        List<Task> tasks = [];
+        try {
+          List<int> taskIds = event.taskIds;
+          await databaseService.deleteAllTaskById(taskIds);
+          print("Deleted all tasks with IDs- $taskIds");
+          tasks = await databaseService.getAllTasks();
+        } catch (e) {}
+        emit(SelectToDeleteState(tasks: tasks));
       },
     );
   }

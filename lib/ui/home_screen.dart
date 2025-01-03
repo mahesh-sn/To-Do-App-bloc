@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:to_do_app_bloc/Model/TaskModel.dart';
-import 'package:to_do_app_bloc/UI/AddNewTask.dart';
+import 'package:to_do_app_bloc/Model/task_model.dart';
+import 'package:to_do_app_bloc/UI/add_new_task.dart';
 import 'package:to_do_app_bloc/bloc/to_do_bloc.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -37,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               );
               if (task != null && task is String && task.isNotEmpty) {
-                print("Task Came to UI- $task");
+                print("Task Came to ui- $task");
                 toDoBloc.add(AddNewTaskEvent(task: task));
               }
             },
@@ -45,15 +45,26 @@ class _HomeScreenState extends State<HomeScreen> {
           body: BlocBuilder<ToDoBloc, ToDoState>(
             builder: (context, state) {
               final tasks = state.tasks;
-              print("All tasks which came to UI \n- $tasks");
+              debugPrint("All tasks which came to ui \n- $tasks");
               return ListView.builder(
                 itemCount: tasks.length,
                 itemBuilder: (context, index) {
                   Task currentTask = tasks[index];
                   return Container(
-                    color: currentTask.taskStatus==0 ? Colors.grey : Colors.green,
+                    color: currentTask.taskStatus == 0
+                        ? Colors.grey
+                        : Colors.green,
                     child: ListTile(
+                      onLongPress: () {
+                        context.read<SelectToDeleteEvent>();
+                      },
                       title: Text(currentTask.taskContent),
+                      leading: Visibility(
+                          visible: false,
+                          child: Checkbox(
+                            value: true,
+                            onChanged: (value) {},
+                          )),
                       trailing: Checkbox(
                         value: currentTask.taskStatus == 1,
                         onChanged: (value) {
@@ -78,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: Colors.cyanAccent,
       title: const Text("To-Do Application"),
       actions: [
-        IconButton(onPressed: () {}, icon: Icon(Icons.delete)),
+        IconButton(onPressed: () {}, icon: const Icon(Icons.delete)),
       ],
     );
   }
